@@ -55,7 +55,18 @@ public class ClientController {
         return "Ta funçonano 👍!";
     }
     @GetMapping(path = "/clientes")
-    public List<Cliente> consultarCliente(){
+    public List<Cliente> consultarCliente(@RequestParam(name = "nome", required = false) String nome){
+
+        List<Cliente> filtro = new ArrayList<Cliente>();
+
+        if (nome != null && !nome.isEmpty()){
+            for (Cliente c : this.listaClientes){
+                if(c.getNome().contains(nome)){
+                    filtro.add(c);
+                }
+            }
+            return filtro;
+        }
 
         return this.listaClientes;
     }
